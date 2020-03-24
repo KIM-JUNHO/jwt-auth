@@ -48,7 +48,7 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
           }}
         />
       </div>
-      <button type="submit">register</button>
+      <button type="submit">login</button>
     </form>
   );
 };

@@ -13,7 +13,7 @@ import { hash, compare } from 'bcryptjs';
 import { User } from './entity/User';
 import { MyContext } from './MyContext';
 import { createRefreshToken, createAccessToken } from './auth';
-import { isAuth } from './isAuthMiddleware';
+import { isAuth } from './isAuth';
 import { sendRefreshToken } from './sendRefreshToken';
 import { getConnection } from 'typeorm';
 

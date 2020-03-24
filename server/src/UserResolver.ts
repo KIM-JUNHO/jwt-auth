@@ -8,9 +8,9 @@ import {
   Ctx
 } from 'type-graphql';
 import { hash, compare } from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
 import { User } from './entity/User';
 import { MyContext } from './MyContext';
+import { createRefreshToken, createAccessToken } from './auth';
 
 @ObjectType()
 class LoginResponse {
@@ -48,14 +48,10 @@ export class UserResolver {
     }
 
     // login successful
-    res.cookie(
-      'cookieName',
-      sign({ userId: user.id }, 'othersecret', { expiresIn: '7d' }),
-      { httpOnly: true }
-    );
+    res.cookie('cookieName', createRefreshToken(user));
 
     return {
-      accessToken: sign({ userId: user.id }, 'secret', { expiresIn: '15m' })
+      accessToken: createAccessToken(user)
     };
   }
 

@@ -6,7 +6,7 @@ import { setAccessToken } from './accessToken';
 interface Props {}
 
 export const Header: React.FC<Props> = () => {
-  const { data, loading } = useMeQuery({ fetchPolicy: 'network-only' });
+  const { data, loading } = useMeQuery();
   const [logout, { client }] = useLogoutMutation();
 
   let body: any = null;

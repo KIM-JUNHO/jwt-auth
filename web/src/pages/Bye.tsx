@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import React from 'react';
 import { useByeQuery } from '../generated/graphql';
 
 interface Props {}
 
-export const Bye: React.FC<RouteComponentProps> = ({ history }) => {
+export const Bye: React.FC<Props> = () => {
   const { data, loading, error } = useByeQuery({ fetchPolicy: 'network-only' });
 
   if (loading) {

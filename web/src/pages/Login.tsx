@@ -15,7 +15,6 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
       onSubmit={async e => {
         e.preventDefault();
         console.log('form submitted');
-        console.log(email, password);
         const response = await login({
           variables: { email, password },
           update: (store, { data }) => {

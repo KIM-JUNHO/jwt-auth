@@ -20,11 +20,13 @@ const requestLink = new ApolloLink(
       Promise.resolve(operation)
         .then(operation => {
           const accessToken = getAccessToken();
-          operation.setContext({
-            headers: {
-              authorization: `bearer ${accessToken}`
-            }
-          });
+          if (accessToken) {
+            operation.setContext({
+              headers: {
+                authorization: `bearer ${accessToken}`
+              }
+            });
+          }
         })
         .then(() => {
           handle = forward(operation).subscribe({

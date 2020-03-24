@@ -1,6 +1,19 @@
-import { Resolver, Query, Mutation, Arg } from 'type-graphql';
-import { hash } from 'bcryptjs';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Arg,
+  Field,
+  ObjectType
+} from 'type-graphql';
+import { hash, compare } from 'bcryptjs';
 import { User } from './entity/User';
+
+@ObjectType()
+class LoginResponse {
+  @Field()
+  accessToken: string;
+}
 
 @Resolver()
 export class UserResolver {

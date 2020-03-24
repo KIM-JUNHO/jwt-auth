@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { useLoginMutation } from '../generated/graphql';
+import { useLoginMutation, MeDocument } from '../generated/graphql';
 import { setAccessToken } from '../accessToken';
 
 interface Props {}
@@ -17,7 +17,16 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
         console.log('form submitted');
         console.log(email, password);
         const response = await login({
-          variables: { email, password }
+          variables: { email, password },
+          update: (store, { data }) => {
+            if (!data) {
+              return null;
+            }
+            store.writeQuery({
+              query: MeDocument,
+              data: data.login.user
+            });
+          }
         });
 
         console.log(response);

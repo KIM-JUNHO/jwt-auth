@@ -7,12 +7,19 @@ import { UserResolver } from './UserResolver';
 import { createConnection } from 'typeorm';
 import cookieParser from 'cookie-parser';
 import { verify } from 'jsonwebtoken';
+import cors from 'cors';
 import { createAccessToken, createRefreshToken } from './auth';
 import { User } from './entity/User';
 import { sendRefreshToken } from './sendRefreshToken';
 
 (async () => {
   const app = express();
+  app.use(
+    cors({
+      origin: 'http://localhost:3000',
+      credentials: true
+    })
+  );
   app.use(cookieParser());
   app.get('/', (_req, res) => res.send('hello'));
   app.post('/refresh_token', async (req, res) => {
@@ -54,7 +61,7 @@ import { sendRefreshToken } from './sendRefreshToken';
     context: ({ req, res }) => ({ req, res })
   });
 
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(4000, () => {
     console.log('express server started');

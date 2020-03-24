@@ -13,6 +13,7 @@ import { User } from './entity/User';
 import { MyContext } from './MyContext';
 import { createRefreshToken, createAccessToken } from './auth';
 import { isAuth } from './isAuthMiddleware';
+import { sendRefreshToken } from './sendRefreshToken';
 
 @ObjectType()
 class LoginResponse {
@@ -57,7 +58,7 @@ export class UserResolver {
     }
 
     // login successful
-    res.cookie('cookieName', createRefreshToken(user));
+    sendRefreshToken(res, createRefreshToken(user));
 
     return {
       accessToken: createAccessToken(user)

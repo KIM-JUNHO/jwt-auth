@@ -7,8 +7,9 @@ import { UserResolver } from './UserResolver';
 import { createConnection } from 'typeorm';
 import cookieParser from 'cookie-parser';
 import { verify } from 'jsonwebtoken';
-import { createAccessToken } from './auth';
+import { createAccessToken, createRefreshToken } from './auth';
 import { User } from './entity/User';
+import { sendRefreshToken } from './sendRefreshToken';
 
 (async () => {
   const app = express();
@@ -34,6 +35,8 @@ import { User } from './entity/User';
     if (!user) {
       return res.send({ ok: false, accessToken: '' });
     }
+
+    sendRefreshToken(res, createRefreshToken(user));
 
     return res.send({ ok: true, accessToken: createAccessToken(user) });
   });
